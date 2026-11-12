@@ -734,6 +734,19 @@ def update_invoice(
             detail="Cannot change the voucher type of an invoice created from a quotation",
         )
 
+    # The number comes from the series of the voucher type the invoice was
+    # created with and is kept on edit, so switching between Sales and
+    # Purchase would leave a sales invoice with a purchase number and a gap
+    # in the other series.
+    if payload.voucher_type != invoice.voucher_type:
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "An invoice can't change between Sales and Purchase. "
+                "Cancel it and create a new one."
+            ),
+        )
+
     try:
         # Invoice before stock, the order cancel and restore use, so an edit and a
         # cancel of one invoice wait for each other instead of deadlocking. The status

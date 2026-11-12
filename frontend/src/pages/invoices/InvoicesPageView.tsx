@@ -1297,7 +1297,7 @@ export default function InvoicesPage() {
                   id="invoice-voucher-type"
                   className="select"
                   value={voucherType}
-                  disabled={conversion !== null || editingQuotation !== null}
+                  disabled={conversion !== null || editingQuotation !== null || editingInvoiceId !== null}
                   onChange={(event) => changeVoucherType(event.target.value as ComposerVoucherType)}
                 >
                   <option value="sales">Sales</option>
